@@ -1,7 +1,7 @@
 package com.atividadde1.atividade1.controllers;
 
-import com.atividadde1.atividade1.models.DTOs.UserDTO;
-import com.atividadde1.atividade1.models.User;
+import com.atividadde1.atividade1.models.DTOs.UserRequestDTO;
+import com.atividadde1.atividade1.models.DTOs.UserResponseDTO;
 import com.atividadde1.atividade1.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +20,22 @@ public class UserController {
     }
 
     @GetMapping
-    private ResponseEntity<List<UserDTO>> getUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    private ResponseEntity<List<UserResponseDTO>> getUsers() {
+        return new ResponseEntity<List<UserResponseDTO>>(userService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+    private ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findById(id),HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    private ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
+    private ResponseEntity<UserResponseDTO> create(@RequestBody UserRequestDTO userDTO) {
         return new ResponseEntity<>(userService.create(userDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    private ResponseEntity<UserDTO> delete(@PathVariable Long id) {
+    private ResponseEntity<UserResponseDTO> delete(@PathVariable Long id) {
         userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
 

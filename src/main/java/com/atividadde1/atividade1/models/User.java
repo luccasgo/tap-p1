@@ -3,12 +3,16 @@ package com.atividadde1.atividade1.models;
 
 import com.atividadde1.atividade1.utils.Constans;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @Table(name = "users")
 public class User {
 
@@ -25,9 +29,9 @@ public class User {
     @Column(length = Constans.PHOTO_PATH)
     private String imagePath;
 
-    @Column(length = Constans.MESSAGE_LENGTH)
-    private String message;
-
     private Boolean isActive = true;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Post> posts;
 
 }

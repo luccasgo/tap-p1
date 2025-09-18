@@ -1,8 +1,9 @@
 package com.atividadde1.atividade1.services;
 
-import com.atividadde1.atividade1.models.DTOs.UserDTO;
+import com.atividadde1.atividade1.models.DTOs.UserRequestDTO;
+import com.atividadde1.atividade1.models.DTOs.UserResponseDTO;
 import com.atividadde1.atividade1.models.User;
-import com.atividadde1.atividade1.models.mappers.UserCreateMapper;
+import com.atividadde1.atividade1.models.mappers.UserMapper;
 import com.atividadde1.atividade1.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,40 +19,41 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDTO create(UserDTO userDTO) {
-        User user = UserCreateMapper.toEntity(userDTO);
+    public UserResponseDTO create(UserRequestDTO userDTO) {
+        User user = UserMapper.toEntity(userDTO);
         userRepository.save(user);
-        return UserCreateMapper.toDTO(user);
+        return UserMapper.toDTO(user);
     }
 
-    public List<UserDTO> findAll(){
+    public List<UserResponseDTO> findAll(){
         List<User> users = userRepository.findAll();
-        List<UserDTO> userDTOs = new ArrayList<>();
+        List<UserResponseDTO> userDTOs = new ArrayList<>();
         if(users != null){
             for(User user : users){
-                userDTOs.add(UserCreateMapper.toDTO(user));
+                userDTOs.add(UserMapper.toDTO(user));
             }
         }
         return userDTOs;
     }
 
-    public UserDTO findById(Long id) {
+    public UserResponseDTO findById(Long id) {
         User user =  userRepository.findById(id).orElse(null);
-        UserDTO userDTO = null;
+        UserResponseDTO userDTO = null;
         if(user != null){
-            userDTO = UserCreateMapper.toDTO(user);
+            userDTO = UserMapper.toDTO(user);
         }
         return userDTO;
     }
 
-    public UserDTO findByEmail(String email) {
+    public UserResponseDTO findByEmail(String email) {
         User user = userRepository.findByEmail(email);
-        UserDTO userDTO = null;
+        UserResponseDTO userDTO = null;
         if(user != null){
-            userDTO = UserCreateMapper.toDTO(user);
+            userDTO = UserMapper.toDTO(user);
         }
         return userDTO;
     }
+
 
     public void deleteById(Long id) {
         User user = userRepository.findById(id).orElse(null);
