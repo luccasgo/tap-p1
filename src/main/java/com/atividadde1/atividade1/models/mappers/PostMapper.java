@@ -41,4 +41,9 @@ public interface PostMapper {
                 .build();
 
     }
+
+    public static Post updatePost(PostRequestDTO postDTO,Post post) {
+        post.setText(postDTO.text());
+        return post;
+    }
 }

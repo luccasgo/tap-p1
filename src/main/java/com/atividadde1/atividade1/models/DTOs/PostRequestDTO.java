@@ -6,7 +6,8 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record PostRequestDTO(String text,
+public record PostRequestDTO(Long id,
+                             String text,
                              LocalDateTime date,
                              User user) {
 }

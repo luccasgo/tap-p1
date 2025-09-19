@@ -25,17 +25,35 @@ public class PostService {
         return PostMapper.toDTOs(posts);
     }
 
+    public PostResponseDTO findById(Long id) {
+        Post post = postRepository.findById(id).orElse(null);
+        if (post == null) {
+            throw new RuntimeException("Post not found");
+        }
+        return PostMapper.toDTO(post);
+    }
+
     public PostResponseDTO create(PostRequestDTO postDTO) {
         Post post = PostMapper.toEntity(postDTO);
         postRepository.save(post);
         return PostMapper.toDTO(post);
     }
 
-    public PostResponseDTO update(Post post) {
-//        return postRepository.save(post);
+    public PostResponseDTO update(PostRequestDTO postDTO) {
+        Post post = postRepository.findById(postDTO.id()).orElse(null);
+        if (post == null) {
+           throw new RuntimeException("Post not found");
+        }
+        Post auxPost = PostMapper.updatePost(postDTO, post);
+        postRepository.save(auxPost);
+        return PostMapper.toDTO(auxPost);
     }
 
     public void deleteById(Long id) {
+        Post post = postRepository.findById(id).orElse(null);
+        if (post == null) {
+            throw new RuntimeException("Post not found");
+        }
         postRepository.deleteById(id);
     }
 }
