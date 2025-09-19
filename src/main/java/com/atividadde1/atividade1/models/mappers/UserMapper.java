@@ -25,4 +25,12 @@ public class UserMapper {
                 .isActive(userDTO.isActive())
                 .build();
     }
+
+    public static User updateUser(UserRequestDTO userDTO, User user) {
+        user.setUsername(userDTO.username());
+        user.setEmail(userDTO.email());
+        user.setImagePath(userDTO.imagePath());
+        user.setIsActive(userDTO.isActive());
+        return user;
+    }
 }

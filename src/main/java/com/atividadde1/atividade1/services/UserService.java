@@ -5,6 +5,7 @@ import com.atividadde1.atividade1.models.DTOs.UserResponseDTO;
 import com.atividadde1.atividade1.models.User;
 import com.atividadde1.atividade1.models.mappers.UserMapper;
 import com.atividadde1.atividade1.repositories.UserRepository;
+import com.atividadde1.atividade1.utils.Menssages;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,28 +40,38 @@ public class UserService {
     public UserResponseDTO findById(Long id) {
         User user =  userRepository.findById(id).orElse(null);
         UserResponseDTO userDTO = null;
-        if(user != null){
-            userDTO = UserMapper.toDTO(user);
+        if(user == null){
+            throw  new RuntimeException(Menssages.USER_NOT_FOUND);
         }
-        return userDTO;
+        return  UserMapper.toDTO(user);
     }
 
     public UserResponseDTO findByEmail(String email) {
         User user = userRepository.findByEmail(email);
         UserResponseDTO userDTO = null;
-        if(user != null){
-            userDTO = UserMapper.toDTO(user);
+        if(user == null){
+            throw  new RuntimeException(Menssages.USER_NOT_FOUND);
         }
-        return userDTO;
+        return UserMapper.toDTO(user);
     }
 
+    public UserResponseDTO update(UserRequestDTO userDTO) {
+        User user = userRepository.findByEmail(userDTO.email());
+        if (user == null) {
+            throw new RuntimeException(Menssages.USER_NOT_FOUND);
+        }
+        User auxUser = UserMapper.updateUser(userDTO, user);
+        userRepository.save(auxUser);
+        return UserMapper.toDTO(auxUser);
+    }
 
     public void deleteById(Long id) {
         User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
+        if (user == null) {
+            throw new RuntimeException(Menssages.USER_NOT_FOUND);
+        }
             user.setIsActive(false);
             userRepository.save(user);
-        }
     }
 
 }

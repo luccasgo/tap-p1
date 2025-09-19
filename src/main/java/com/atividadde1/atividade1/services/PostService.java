@@ -5,10 +5,9 @@ import com.atividadde1.atividade1.models.DTOs.PostResponseDTO;
 import com.atividadde1.atividade1.models.Post;
 import com.atividadde1.atividade1.models.mappers.PostMapper;
 import com.atividadde1.atividade1.repositories.PostRepository;
-import jakarta.persistence.Id;
+import com.atividadde1.atividade1.utils.Menssages;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,7 +27,7 @@ public class PostService {
     public PostResponseDTO findById(Long id) {
         Post post = postRepository.findById(id).orElse(null);
         if (post == null) {
-            throw new RuntimeException("Post not found");
+            throw new RuntimeException(Menssages.POST_NOT_FOUND);
         }
         return PostMapper.toDTO(post);
     }
@@ -42,7 +41,7 @@ public class PostService {
     public PostResponseDTO update(PostRequestDTO postDTO) {
         Post post = postRepository.findById(postDTO.id()).orElse(null);
         if (post == null) {
-           throw new RuntimeException("Post not found");
+           throw new RuntimeException(Menssages.POST_NOT_FOUND);
         }
         Post auxPost = PostMapper.updatePost(postDTO, post);
         postRepository.save(auxPost);
@@ -52,7 +51,7 @@ public class PostService {
     public void deleteById(Long id) {
         Post post = postRepository.findById(id).orElse(null);
         if (post == null) {
-            throw new RuntimeException("Post not found");
+            throw new RuntimeException(Menssages.POST_NOT_FOUND);
         }
         postRepository.deleteById(id);
     }

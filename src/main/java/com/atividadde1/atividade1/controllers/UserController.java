@@ -26,7 +26,20 @@ public class UserController {
 
     @GetMapping("/{id}")
     private ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.findById(id),HttpStatus.OK);
+        try{
+            return new ResponseEntity<>(userService.findById(id),HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/email/{email}")
+    private ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email) {
+        try{
+            return new ResponseEntity<>(userService.findByEmail(email),HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/create")
@@ -34,11 +47,23 @@ public class UserController {
         return new ResponseEntity<>(userService.create(userDTO), HttpStatus.CREATED);
     }
 
+    @PutMapping("/update")
+    private ResponseEntity<UserResponseDTO> update(@RequestBody UserRequestDTO userDTO) {
+        try{
+            return new ResponseEntity<>(userService.update(userDTO), HttpStatus.OK);
+        }catch(RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     private ResponseEntity<UserResponseDTO> delete(@PathVariable Long id) {
-        userService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-
+        try{
+            userService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
 }
