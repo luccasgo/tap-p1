@@ -1,6 +1,5 @@
 package com.atividadde1.atividade1.models.DTOs;
 
-import com.atividadde1.atividade1.models.User;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -9,5 +8,6 @@ import java.time.LocalDateTime;
 public record PostResponseDTO(Long id,
                               String text,
                               LocalDateTime date,
-                              User user) {
+                              Long userId,
+                              String username) {
 }

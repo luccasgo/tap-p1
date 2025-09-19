@@ -13,7 +13,6 @@ public class UserMapper {
                 .email(user.getEmail())
                 .imagePath(user.getImagePath())
                 .isActive(user.getIsActive())
-                .posts(user.getPosts())
                 .build();
     }
 

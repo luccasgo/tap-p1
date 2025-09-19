@@ -5,6 +5,7 @@ import com.atividadde1.atividade1.models.DTOs.PostRequestDTO;
 import com.atividadde1.atividade1.models.DTOs.PostResponseDTO;
 import com.atividadde1.atividade1.models.Post;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,8 @@ public interface PostMapper {
                 .id(post.getId())
                 .text(post.getText())
                 .date(post.getDate())
-                .user(post.getUser())
+                .userId(post.getUser().getId())
+                .username(post.getUser().getUsername())
                 .build();
 
     }
@@ -27,7 +29,8 @@ public interface PostMapper {
                     .id(post.getId())
                     .text(post.getText())
                     .date(post.getDate())
-                    .user(post.getUser())
+                    .userId(post.getUser().getId())
+                    .username(post.getUser().getUsername())
                     .build());
         }
         return dtos;
@@ -36,7 +39,7 @@ public interface PostMapper {
     public static Post toEntity(PostRequestDTO postDTO) {
         return Post.builder()
                 .text(postDTO.text())
-                .date(postDTO.date())
+                .date(LocalDateTime.now())
                 .user(postDTO.user())
                 .build();
 

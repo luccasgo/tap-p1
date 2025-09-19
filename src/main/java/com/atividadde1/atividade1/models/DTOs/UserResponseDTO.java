@@ -11,6 +11,5 @@ public record UserResponseDTO(Long id,
                               String email,
                               String imagePath,
                               String message,
-                              Boolean isActive,
-                              List<Post> posts) {
+                              Boolean isActive) {
 }

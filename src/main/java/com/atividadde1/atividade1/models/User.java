@@ -2,10 +2,9 @@ package com.atividadde1.atividade1.models;
 
 
 import com.atividadde1.atividade1.utils.Constans;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +13,8 @@ import java.util.List;
 @Setter
 @Builder
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -31,7 +32,7 @@ public class User {
 
     private Boolean isActive = true;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 
 }

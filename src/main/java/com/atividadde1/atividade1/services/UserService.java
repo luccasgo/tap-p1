@@ -39,7 +39,6 @@ public class UserService {
 
     public UserResponseDTO findById(Long id) {
         User user =  userRepository.findById(id).orElse(null);
-        UserResponseDTO userDTO = null;
         if(user == null){
             throw  new RuntimeException(Menssages.USER_NOT_FOUND);
         }
@@ -70,8 +69,16 @@ public class UserService {
         if (user == null) {
             throw new RuntimeException(Menssages.USER_NOT_FOUND);
         }
-            user.setIsActive(false);
-            userRepository.save(user);
+            userRepository.deleteById(id);
+    }
+
+    public void deleteByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new RuntimeException(Menssages.USER_NOT_FOUND);
+        }
+        user.setIsActive(false);
+        userRepository.save(user);
     }
 
 }

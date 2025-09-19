@@ -1,9 +1,8 @@
 package com.atividadde1.atividade1.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Table(name = "posts")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id
@@ -26,7 +27,4 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Post() {
-        this.date = LocalDateTime.now();
-    }
 }

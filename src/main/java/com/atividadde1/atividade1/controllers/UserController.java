@@ -66,4 +66,14 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/delete_email/")
+    private ResponseEntity<UserResponseDTO> deleteByEmail(@RequestBody String email) {
+        try{
+            userService.deleteByEmail(email);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
 }
